@@ -104,6 +104,7 @@ class ShowSparksTool(EditingTool):
 
         self.thisColor = self.okColor
         self.points = []
+        self.comments = []
         self.stuff = []
         self.widths = {}
         self.currentGlyph = None
@@ -165,13 +166,17 @@ class ShowSparksTool(EditingTool):
                         boxCoord = (0,0)
                         self.stuff.append((name, deltaCoord, boxCoord))
             self.points.append(cluster)
-        
         currentWidth = g.width
+        comments = []
         for this in _allFonts:
+            if not g.name in this:
+                comments.append("Glyph %s not in %s"%(g.name, this.info.styleName))
+                continue
             w = this[g.name].width
             diff = (currentWidth-w)*0.5
             self.widths[(-diff, 0)] = 1
             self.widths[(g.width+diff, 0)] = 1
+        self.comments = comments
                             
     def draw(self, scale):
         self.findAllPoints()
