@@ -179,7 +179,10 @@ class ShowSparksTool(EditingTool):
         self.comments = comments
                             
     def draw(self, scale):
-        self.findAllPoints()
+        try:
+            self.findAllPoints()
+        except:
+            return
         if not self.points: return
         if scale == 0:
             return
