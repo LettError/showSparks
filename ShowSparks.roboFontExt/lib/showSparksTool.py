@@ -7,6 +7,11 @@ from robofab.pens.digestPen import DigestPointPen
 from robofab.world import *
 
 from mojo.drawingTools import *
+try:
+    lineDash
+except NameError:
+    from mojo.drawingTools import dashLine as lineDash
+
 from mojo.UI import UpdateCurrentGlyphView
 from mojo.events import installTool
 
@@ -195,7 +200,7 @@ class ShowSparksTool(EditingTool):
             if len(cluster)>1:
                 for i in range(1, len(cluster)):
                     strokeWidth(scale*1)
-                    dashLine(2*scale,2*scale)
+                    lineDash(2*scale,2*scale)
                     r,g,b = getColor(totalClusters, clusterIndex)
                     stroke(r,g,b,self.markerTransparency)
                     fill(None)
@@ -224,7 +229,7 @@ class ShowSparksTool(EditingTool):
         for k, v in pos.items():
             # line between text label and anchor dot
             strokeWidth(scale*1.5)
-            dashLine(2*scale, 2*scale)
+            lineDash(2*scale, 2*scale)
             stroke(0.1,0.1,0.1,0.5)
             fill(None)
             lineJoin('round')
@@ -257,7 +262,7 @@ class ShowSparksTool(EditingTool):
         d = 10
         stroke(self.thisColor[0],self.thisColor[1],self.thisColor[2],self.markerTransparency)
         strokeWidth(scale*1)
-        dashLine(2*scale, 2*scale)
+        lineDash(2*scale, 2*scale)
         fill(None)
         for pt in self.widths.keys():
             line((pt[0], self.presentationHeight-30*scale), (pt[0], self.presentationHeight+30*scale))
